@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fashion Empires | Admin Control Center</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. LOGIN VIEW (Password Protected)
+       ========================================================================== -->
+  <div class="login-wrapper" id="loginView">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="login-logo-icon">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div style="text-align:left;">
+          <div style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:1.15rem; color:#001f3f;">
+            FASHION EMPIRES
+          </div>
+          <div style="font-size:0.65rem; color:#6b7280; letter-spacing:0.1em; font-weight:700;">
+            ADMIN CONTROL CENTER
+          </div>
+        </div>
+      </div>
+
+      <h1 class="login-title">Admin Login</h1>
+      <p class="login-subtitle">Sign in to manage products, categories, hero slides, and website settings.</p>
+
+      <form id="adminLoginForm">
+        <div class="form-group" style="text-align:left;">
+          <label class="form-label" for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" class="form-control" value="admin" required autocomplete="username">
+        </div>
+        <div class="form-group" style="text-align:left;">
+          <label class="form-label" for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="form-control" value="fashion123" required autocomplete="current-password">
+        </div>
+
+        <div id="loginError" style="display:none; color:#ef4444; font-size:0.8rem; margin-bottom:1rem; font-weight:600;"></div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:0.85rem;">
+          Sign In to Dashboard →
+        </button>
+      </form>
+      <div style="margin-top:1.5rem; font-size:0.75rem; color:#9ca3af;">
+        Default Credentials: <strong>admin</strong> / <strong>fashion123</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       2. DASHBOARD VIEW (Full Admin Interface)
+       ========================================================================== -->
+  <div class="admin-layout" id="dashboardView" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="login-logo-icon" style="width:34px; height:34px;">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="sidebar-logo-text">
+          Fashion Empires
+          <span>Admin Center</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-item active" data-tab="tab-dashboard">
+          <span class="sidebar-icon">📊</span>
+          <span>Dashboard Overview</span>
+        </div>
+        <div class="sidebar-item" data-tab="tab-products">
+          <span class="sidebar-icon">👕</span>
+          <span>Products Manager</span>
+        </div>
+        <div class="sidebar-item" data-tab="tab-categories">
+          <span class="sidebar-icon">📂</span>
+          <span>Categories (6 Divs)</span>
+        </div>
+        <div class="sidebar-item" data-tab="tab-banners">
+          <span class="sidebar-icon">🖼️</span>
+          <span>Hero Slider Banners</span>
+        </div>
+        <div class="sidebar-item" data-tab="tab-settings">
+          <span class="sidebar-icon">⚙️</span>
+          <span>Company & Contacts</span>
+        </div>
+        <div class="sidebar-item" data-tab="tab-backup">
+          <span class="sidebar-icon">💾</span>
+          <span>Backup & Sync Code</span>
+        </div>
+        <div class="sidebar-item" data-tab="tab-supabase">
+          <span class="sidebar-icon">☁️</span>
+          <span>Supabase & Leads</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div>Fashion Empires v2.0</div>
+        <div style="color:#64748b; margin-top:3px;">Columbia Standard Layout</div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-title-wrap">
+          <h2 id="currentTabTitle">Control Dashboard</h2>
+        </div>
+        <div class="header-actions">
+          <div style="display:flex; align-items:center; gap:0.4rem; background:#ecfdf5; border:1px solid #a7f3d0; padding:0.35rem 0.75rem; border-radius:999px; font-size:0.75rem; font-weight:700; color:#065f46;">
+            <span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span>
+            <span>Supabase: cnrwejtfdjmwxblcyomh</span>
+          </div>
+          <button id="quickCloudSyncBtn" class="btn btn-primary btn-sm" title="Push all local changes to Supabase cloud">
+            ☁️ Sync to Cloud
+          </button>
+          <a href="index.html" target="_blank" class="btn btn-outline btn-sm">
+            🌐 View Live Website
+          </a>
+          <button id="logoutBtn" class="btn btn-dark btn-sm">
+            🚪 Logout
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-content">
+
+        <!-- ==================================================================
+             TAB 1: DASHBOARD OVERVIEW
+             ================================================================== -->
+        <section class="tab-panel" id="tab-dashboard">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon blue">👕</div>
+              <div>
+                <div class="stat-number" id="statTotalProducts">12</div>
+                <div class="stat-label">Total Products</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon green">📂</div>
+              <div>
+                <div class="stat-number" id="statTotalCategories">6</div>
+                <div class="stat-label">Equal Categories</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon purple">🖼️</div>
+              <div>
+                <div class="stat-number" id="statTotalBanners">4</div>
+                <div class="stat-label">Hero Banners</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon amber">🌍</div>
+              <div>
+                <div class="stat-number" id="statExportInquiries">35+</div>
+                <div class="stat-label">Export Destinations</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title">Recent Products in Catalog</h3>
+              <button class="btn btn-primary btn-sm" onclick="document.querySelector('.sidebar-item[data-tab=\'tab-products\']').click();">
+                View All Products →
+              </button>
+            </div>
+            <div class="admin-card-body" style="padding:0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th style="width:70px;">Photo</th>
+                      <th>Product Title & SKU</th>
+                      <th>Category</th>
+                      <th>Price Estimate</th>
+                      <th>Standard MOQ</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentProductsTableBody">
+                    <!-- Populated dynamically via admin.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             TAB 2: PRODUCTS MANAGER (Add, Edit, Delete, Photos, Colors)
+             ================================================================== -->
+        <section class="tab-panel" id="tab-products" style="display:none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Manage Product Catalog</h3>
+                <p style="font-size:0.8rem; color:#6b7280; margin-top:2px;">
+                  Add new items, update pictures, change color swatches, or edit pricing.
+                </p>
+              </div>
+              <button class="btn btn-primary" id="addNewProductBtn">
+                + Add New Product
+              </button>
+            </div>
+
+            <div class="admin-card-body" style="background:#fafafa; border-bottom:1px solid #e5e7eb;">
+              <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <input type="text" id="productSearchInput" class="form-control" placeholder="🔍 Search product title, SKU, or fabric..." style="max-width:350px;">
+                <select id="productCategoryFilter" class="form-control" style="max-width:200px;">
+                  <option value="all">All Categories</option>
+                  <option value="sportswear">Sports Wear</option>
+                  <option value="casualwear">Casual Wear</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-card-body" style="padding:0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th style="width:70px;">Picture</th>
+                      <th>Product Title & Details</th>
+                      <th>Division</th>
+                      <th>Price FOB</th>
+                      <th>MOQ</th>
+                      <th>Swatches</th>
+                      <th style="width:170px;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productsTableBody">
+                    <!-- Rendered dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             TAB 3: CATEGORIES MANAGER (6 Equal Symmetrical Cards)
+             ================================================================== -->
+        <section class="tab-panel" id="tab-categories" style="display:none;">
+          <div style="margin-bottom:1.5rem;">
+            <h3 style="font-size:1.25rem; font-weight:800; text-transform:uppercase;">Front Page Categories (Shop By Category)</h3>
+            <p style="color:#6b7280; font-size:0.85rem;">
+              Customize the 6 equal-dimension category cards shown on your homepage. Change photos, division numbers, titles, and subtext.
+            </p>
+          </div>
+
+          <div id="categoriesEditorGrid">
+            <!-- Rendered dynamically via admin.js -->
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             TAB 4: HERO SLIDER BANNERS
+             ================================================================== -->
+        <section class="tab-panel" id="tab-banners" style="display:none;">
+          <div style="margin-bottom:1.5rem;">
+            <h3 style="font-size:1.25rem; font-weight:800; text-transform:uppercase;">Hero Slider Banners (4 Slides)</h3>
+            <p style="color:#6b7280; font-size:0.85rem;">
+              Change the background photos, main headlines, tags, and button links for each of the 4 sliding banners on your homepage.
+            </p>
+          </div>
+
+          <div id="bannersEditorList">
+            <!-- Rendered dynamically via admin.js -->
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             TAB 5: COMPANY INFO & CONTACT SETTINGS
+             ================================================================== -->
+        <section class="tab-panel" id="tab-settings" style="display:none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title">Company Profile & Contact Information</h3>
+            </div>
+            <div class="admin-card-body">
+              <form id="siteSettingsForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="setCompanyName">Company Name</label>
+                    <input type="text" id="setCompanyName" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="setEmail">Official Email</label>
+                    <input type="email" id="setEmail" class="form-control" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="setPhone">Phone / WhatsApp Number</label>
+                    <input type="text" id="setPhone" class="form-control" placeholder="0342832446" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="setPhoneInt">International Number (+92)</label>
+                    <input type="text" id="setPhoneInt" class="form-control" placeholder="+92342832446" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="setAddress">Factory & Office Address</label>
+                  <input type="text" id="setAddress" class="form-control" required>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="setExportCountries">Export Countries Stat</label>
+                    <input type="text" id="setExportCountries" class="form-control" placeholder="35+">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="setMonthlyCapacity">Monthly Garment Capacity</label>
+                    <input type="text" id="setMonthlyCapacity" class="form-control" placeholder="500,000+">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="setQcPassRate">QC Pass Rate</label>
+                    <input type="text" id="setQcPassRate" class="form-control" placeholder="99.8%">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="setSampleTurnaround">Sample Turnaround</label>
+                    <input type="text" id="setSampleTurnaround" class="form-control" placeholder="5 - 7 Days">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="setPrimaryColor">Primary Brand Accent Color</label>
+                  <input type="color" id="setPrimaryColor" class="form-control" style="height:44px; padding:4px;" value="#0072ce">
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                  💾 Save All Company Settings
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Change Password Box -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title">Change Admin Password</h3>
+            </div>
+            <div class="admin-card-body">
+              <form id="adminPasswordForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="setAdminUser">Admin Username</label>
+                    <input type="text" id="setAdminUser" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="setAdminPass">New Password</label>
+                    <input type="password" id="setAdminPass" class="form-control" required>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-dark btn-sm">
+                  Update Admin Login Credentials
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             TAB 6: BACKUP & EXPORT
+             ================================================================== -->
+        <section class="tab-panel" id="tab-backup" style="display:none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3 class="admin-card-title">Data Backup, Export & Permanent Code Sync</h3>
+            </div>
+            <div class="admin-card-body">
+              <p style="color:#4b5563; margin-bottom:1.5rem;">
+                Keep your website safe by downloading periodic backups, or export the JavaScript code to make changes permanently stored inside your project files.
+              </p>
+
+              <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
+                <button id="downloadBackupBtn" class="btn btn-primary">
+                  📥 Download Backup (JSON)
+                </button>
+
+                <label class="btn btn-outline" style="cursor:pointer;">
+                  📤 Restore Backup from JSON
+                  <input type="file" id="restoreBackupFile" accept=".json" style="display:none;">
+                </label>
+
+                <button id="exportJsCodeBtn" class="btn btn-dark">
+                  📋 Generate 'products-data.js' Code
+                </button>
+
+                <button id="resetAllDefaultsBtn" class="btn btn-danger">
+                  ⚠️ Reset Everything to Factory Defaults
+                </button>
+              </div>
+
+              <div>
+                <textarea id="exportedJsCodeBox" class="form-control" rows="12" style="font-family:monospace; font-size:0.8rem; display:none;" readonly></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             TAB 7: SUPABASE CLOUD & RFQ LEADS
+             ================================================================== -->
+        <section class="tab-panel" id="tab-supabase" style="display:none;">
+          <!-- Supabase Connection Status Card -->
+          <div class="admin-card" style="margin-bottom:2rem;">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">☁️ Supabase Cloud Database Status</h3>
+                <p style="font-size:0.8rem; color:#6b7280; margin-top:2px;">
+                  Connected to Project ID: <code style="color:#0072ce; font-weight:700;">cnrwejtfdjmwxblcyomh</code>
+                </p>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span style="background:#10b981; color:#fff; font-size:0.75rem; padding:0.35rem 0.75rem; border-radius:999px; font-weight:700;">
+                  🟢 Live Supabase Connected
+                </span>
+              </div>
+            </div>
+            <div class="admin-card-body">
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:1.2rem;">
+                  <div style="font-size:0.75rem; color:#64748b; font-weight:700; text-transform:uppercase;">API Endpoint URL</div>
+                  <div style="font-size:0.85rem; font-weight:700; color:#0f172a; margin-top:0.35rem; word-break:break-all;">
+                    https://cnrwejtfdjmwxblcyomh.supabase.co
+                  </div>
+                  <div style="margin-top:0.75rem;">
+                    <a href="https://supabase.com/dashboard/project/cnrwejtfdjmwxblcyomh" target="_blank" class="btn btn-outline btn-sm">
+                      ↗ Open Supabase Dashboard
+                    </a>
+                  </div>
+                </div>
+
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:1.2rem;">
+                  <div style="font-size:0.75rem; color:#64748b; font-weight:700; text-transform:uppercase;">Cloud Sync Actions</div>
+                  <p style="font-size:0.8rem; color:#475569; margin:0.35rem 0 0.75rem 0;">
+                    Sync your local catalog into Supabase or pull latest updates down to your browser.
+                  </p>
+                  <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                    <button id="pushAllToSupabaseBtn" class="btn btn-primary btn-sm">
+                      ⬆️ Push All Local Data to Supabase
+                    </button>
+                    <button id="pullFromSupabaseBtn" class="btn btn-outline btn-sm">
+                      ⬇️ Pull from Supabase
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SQL Setup Assistant -->
+              <div style="background:#f1f5f9; border-left:4px solid #0072ce; padding:1rem 1.25rem; border-radius:4px; margin-bottom:1rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                  <div>
+                    <strong style="color:#001f3f;">Need to setup or reset your Supabase Tables?</strong>
+                    <div style="font-size:0.8rem; color:#475569;">Run our complete SQL script in your Supabase SQL Editor to initialize <code>fe_products</code>, <code>fe_categories</code>, <code>fe_banners</code>, <code>fe_settings</code>, and <code>fe_inquiries</code>.</div>
+                  </div>
+                  <div style="display:flex; gap:0.5rem;">
+                    <button id="copySqlScriptBtn" class="btn btn-dark btn-sm">📋 Copy SQL Setup Script</button>
+                    <a href="https://supabase.com/dashboard/project/cnrwejtfdjmwxblcyomh/sql/new" target="_blank" class="btn btn-outline btn-sm">⚡ Supabase SQL Editor</a>
+                  </div>
+                </div>
+                <textarea id="sqlScriptViewBox" class="form-control" rows="8" style="margin-top:0.75rem; font-family:monospace; font-size:0.75rem; display:none;" readonly></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customer Inquiries / Leads Table -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">📥 Customer RFQ Leads & Quotes (Supabase <code>fe_inquiries</code>)</h3>
+                <p style="font-size:0.8rem; color:#6b7280; margin-top:2px;">
+                  All inquiry requests submitted via homepage RFQ calculator or contact page are stored here in real time.
+                </p>
+              </div>
+              <button id="refreshInquiriesBtn" class="btn btn-outline btn-sm">
+                🔄 Refresh Leads
+              </button>
+            </div>
+            <div class="admin-card-body" style="padding:0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th style="width:140px;">Date & Time</th>
+                      <th>Buyer / Brand</th>
+                      <th>Country</th>
+                      <th>Category & Qty</th>
+                      <th>Customization / Notes</th>
+                      <th style="width:130px; text-align:center;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="inquiriesTableBody">
+                    <tr>
+                      <td colspan="6" style="text-align:center; padding:2.5rem; color:#9ca3af;">
+                        Loading inquiries from Supabase cloud...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: ADD / EDIT PRODUCT DIALOG
+       ========================================================================== -->
+  <div class="modal-overlay" id="productModalOverlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="productModalHeading" style="font-size:1.15rem; font-weight:800; text-transform:uppercase;">Add Product</h3>
+        <button class="modal-close" id="productModalClose" type="button">&#10005;</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="productForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="prodTitle">Product Title</label>
+              <input type="text" id="prodTitle" class="form-control" placeholder="e.g. Pro Sublimated Soccer Jersey" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodCategory">Category Division</label>
+              <select id="prodCategory" class="form-control">
+                <option value="sportswear">Sports Wear</option>
+                <option value="casualwear">Casual Wear</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="prodSubCategory">Sub-Category</label>
+              <input type="text" id="prodSubCategory" class="form-control" placeholder="e.g. teamwear, hoodies, fitness, tracksuits" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodSku">SKU Code</label>
+              <input type="text" id="prodSku" class="form-control" placeholder="FE-SP-001" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="prodTechTag">Proprietary Tech Tag</label>
+              <select id="prodTechTag" class="form-control">
+                <option value="EMPIRE-DRY™">EMPIRE-DRY™ (Moisture Evaporation)</option>
+                <option value="FLEX-SHIELD™">FLEX-SHIELD™ (4-Way Compression)</option>
+                <option value="THERMA-FLEECE™">THERMA-FLEECE™ (450 GSM Fleece)</option>
+                <option value="SUB-TECH 360™">SUB-TECH 360™ (Sublimation Print)</option>
+                <option value="VINTAGE-WASH™">VINTAGE-WASH™ (Mineral / Acid Wash)</option>
+                <option value="PIQUE-KNIT™">PIQUE-KNIT™ (Combed Cotton)</option>
+                <option value="HERITAGE-WOOL™">HERITAGE-WOOL™ (Varsity Melton)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodBadge">Product Badge</label>
+              <input type="text" id="prodBadge" class="form-control" placeholder="e.g. Tested Tough, Export Best Seller">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="prodPrice">Price FOB Estimate</label>
+              <input type="text" id="prodPrice" class="form-control" placeholder="$8.50 - $14.00 / pc" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodMoq">Minimum Order Quantity (MOQ)</label>
+              <input type="text" id="prodMoq" class="form-control" placeholder="30 Pieces" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prodFabric">Fabric & GSM Specs</label>
+            <input type="text" id="prodFabric" class="form-control" placeholder="e.g. 100% Interlock Micro-Polyester (160 GSM)" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prodDesc">Product Description</label>
+            <textarea id="prodDesc" class="form-control" rows="3" placeholder="Explain technical performance, stitching, fit, and use cases..." required></textarea>
+          </div>
+
+          <!-- Color Swatches Selection -->
+          <div class="form-group">
+            <label class="form-label">Available Color Swatches</label>
+            <div class="color-swatches-selector">
+              <label class="swatch-check">
+                <input type="checkbox" class="swatch-checkbox" value="#111111" checked>
+                <span class="swatch-color-dot" style="background:#111111;"></span> Black
+              </label>
+              <label class="swatch-check">
+                <input type="checkbox" class="swatch-checkbox" value="#002855" checked>
+                <span class="swatch-color-dot" style="background:#002855;"></span> Navy
+              </label>
+              <label class="swatch-check">
+                <input type="checkbox" class="swatch-checkbox" value="#0072ce" checked>
+                <span class="swatch-color-dot" style="background:#0072ce;"></span> Royal
+              </label>
+              <label class="swatch-check">
+                <input type="checkbox" class="swatch-checkbox" value="#ffffff">
+                <span class="swatch-color-dot" style="background:#ffffff; border:1px solid #aaa;"></span> White
+              </label>
+              <label class="swatch-check">
+                <input type="checkbox" class="swatch-checkbox" value="#4b5563">
+                <span class="swatch-color-dot" style="background:#4b5563;"></span> Grey
+              </label>
+              <label class="swatch-check">
+                <input type="checkbox" class="swatch-checkbox" value="#e11d48">
+                <span class="swatch-color-dot" style="background:#e11d48;"></span> Red
+              </label>
+              <label class="swatch-check">
+                <input type="checkbox" class="swatch-checkbox" value="#365314">
+                <span class="swatch-color-dot" style="background:#365314;"></span> Olive
+              </label>
+              <label class="swatch-check">
+                <input type="checkbox" class="swatch-checkbox" value="#d97706">
+                <span class="swatch-color-dot" style="background:#d97706;"></span> Gold
+              </label>
+            </div>
+          </div>
+
+          <!-- Product Picture (URL + Upload) -->
+          <div class="form-group">
+            <label class="form-label">Product Picture</label>
+            <div class="form-row">
+              <div>
+                <input type="text" id="prodImageUrl" class="form-control" placeholder="Paste Image Web URL">
+                <div class="form-help">Or upload an image file from your computer below:</div>
+                <input type="file" id="prodImageFile" accept="image/*" class="form-control" style="margin-top:0.35rem;">
+              </div>
+              <div>
+                <div class="image-preview-box">
+                  <img id="prodImagePreview" src="" alt="Preview" style="display:none;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer" style="padding-left:0; padding-right:0; margin-top:1.5rem;">
+            <button type="button" class="btn btn-outline" id="productModalCancel">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/products-data.js"></script>
+  <script src="js/store-manager.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
